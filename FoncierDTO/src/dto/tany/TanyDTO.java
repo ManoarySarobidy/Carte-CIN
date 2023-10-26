@@ -11,6 +11,9 @@ public class TanyDTO implements Serializable{
     boolean borne;
     double width;
     double height;
+    String addresse;
+    String cin;
+    Coordinate[] coordinates;
     
     public TanyDTO(boolean borne, double width, double height) {
         this.borne = borne;
@@ -18,6 +21,31 @@ public class TanyDTO implements Serializable{
         this.height = height;
         
     }
+    
+    public void setCoordinates(Coordinate[] coords){
+        this.coordinates = coords;
+    }
+    public Coordinate[] getCoordinates(){
+        return this.coordinates;
+    }
+    
+    public TanyDTO(){}
+    
+    public void setAddresse(String addresse){
+        this.addresse = addresse;
+    }
+    public String getAddresse(){
+        return this.addresse;
+    }
+    
+    public void setCin(String c){
+        this.cin = c;
+    }
+    public String getCin(){
+        return this.cin;
+    }
+    
+    
     
     public boolean isBorne() {
         return borne;

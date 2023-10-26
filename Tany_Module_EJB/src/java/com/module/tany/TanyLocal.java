@@ -26,4 +26,8 @@ public interface TanyLocal extends Serializable {
     
     public AccountDTO getBank( String cin ) throws Exception;
     
+    public void ajouterBorne( dto.tany.Coordinate[] coordinates ) throws Exception;
+    
+    public void ajouterTany(TanyDTO tanyD) throws Exception;
+    
 }

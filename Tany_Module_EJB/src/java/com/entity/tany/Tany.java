@@ -3,7 +3,12 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package com.entity.tany;
+import dto.tany.TanyDTO;
+import java.sql.Connection;
+import java.util.Vector;
+import mine.generic.Dao;
 import mine.generic.annotation.*;
+import sql.Connect;
 /**
  *
  * @author Cartel
@@ -24,6 +29,15 @@ public class Tany {
     Double width;
     @Column("longueur")
     Double length;
+    @Column
+    String addresse;
+    
+    public void setAddresse(String ad){
+        this.addresse = ad;
+    }
+    public String getAddresse(){
+        return this.addresse;
+    }
     
     // Ny tany dia manana coordonnées bobaka be
     // Ny coordonées de ensemble ana lognitude sy latitude
@@ -78,9 +92,44 @@ public class Tany {
         this.coordinates = coordinates;
     }
     
+    public void setCoordinates() throws Exception{
+        String sql = "select * from coordinate where idTany = " + this.getId();
+        Connection connection = new Connect().getPostgres();
+        Vector<Coordinate> coords = Dao.findAll(connection, this, sql);
+        connection.close();
+        Coordinate[] coordinates = coords.toArray( new Coordinate[ coords.size() ] );
+        this.setCoordinates(coordinates);
+    }
+    
+    public dto.tany.Coordinate[] getCoordinateAsDTO(){
+        dto.tany.Coordinate[] cs = new dto.tany.Coordinate[ this.getCoordinates().length ];
+        for( int i = 0;i < cs.length ; i++ ){
+            dto.tany.Coordinate c = this.getCoordinates()[i].asDTO();
+        }
+        return cs;
+    }
+    
     public Coordinate[] getCoordinates(){
         return this.coordinates;
     }
+    
+    public void save( TanyDTO tanys ) throws Exception{
+        this.setAddresse(tanys.getAddresse());
+        this.setCin(tanys.getCin());
+        this.setBorne(tanys.isBorne());
+        Connection connection = new Connect().getPostgres();
+        try{
+            Dao.save(connection, this);
+            connection.close();
+        }catch(Exception e){
+            connection.rollback();
+            throw e;
+        }finally{
+            connection.close();
+        }
+    }
+    
+    
     
     // Inona ny tokony atao zao
     // Manao an'ilay affichage amin'ny c#

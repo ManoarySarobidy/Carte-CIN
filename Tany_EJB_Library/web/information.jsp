@@ -68,6 +68,7 @@
                                 
                             </div>
                         </div>
+<<<<<<< Updated upstream
                         <div class="card mx-3" style="width: 350px">
                             <div class="card-header">
                                 <h3>Banque</h3>
@@ -90,6 +91,22 @@
                                     <% } %>
                                 </table>
 
+=======
+                        <div class="card">
+                            <div class="card-header">
+                                <h3> Santé </h3>
+                            </div>
+                            <div class="card-body">
+                                
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-header">
+                                <h3> Santé </h3>
+                            </div>
+                            <div class="card-body">
+                                
+>>>>>>> Stashed changes
                             </div>
                         </div>
                     </div>

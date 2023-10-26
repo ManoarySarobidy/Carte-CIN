@@ -58,11 +58,20 @@ public class TanyEJB implements TanyEJBRemote, TanyLocal {
         return tany;
     }
     
+    
     private Vector<TanyDTO> toDto( Vector<Tany> tanys ){
         Vector<TanyDTO> tanyDto = new Vector<TanyDTO>();
         for( Tany tany : tanys ){
-            TanyDTO dto = new TanyDTO( tany.isBorne(), tany.getWidth(), tany.getLength());
-            tanyDto.add(dto);
+            try{
+                tany.setCoordinates();
+                TanyDTO dto = new TanyDTO( tany.isBorne(), tany.getWidth(), tany.getLength());
+                dto.setCin(tany.getCin());
+                dto.setAddresse(tany.getAddresse());
+                dto.setCoordinates(tany.getCoordinateAsDTO());
+                tanyDto.add(dto);
+            }catch(Exception e){
+                e.printStackTrace();
+            }
         }
         return tanyDto;
     }
@@ -110,6 +119,12 @@ public class TanyEJB implements TanyEJBRemote, TanyLocal {
         }
     }
     
+    @Override
+    public void ajouterTany(TanyDTO tanyD) throws Exception{
+        Tany tany = new Tany();
+        tany.save(tanyD);
+    }
+    
     // Alaina ny information bancaire
     // Atao EJB
     
@@ -124,6 +139,14 @@ public class TanyEJB implements TanyEJBRemote, TanyLocal {
         return dto;
 //        DeviseDTO devise = tany.getDevise( this.getIdDevise() );
 //        this.setDevises(devise);
+    }
+    
+    @Override
+    public void ajouterBorne( dto.tany.Coordinate[] coordinates ) throws Exception{
+        // 1 - Alefa any amin'ny tany izy zao
+        // 2 - Andao ara eh
+        com.entity.tany.Coordinate coo = new com.entity.tany.Coordinate();
+        coo.saveBorne( coordinates );
     }
     
     // Add business logic below. (Right-click in editor and choose
