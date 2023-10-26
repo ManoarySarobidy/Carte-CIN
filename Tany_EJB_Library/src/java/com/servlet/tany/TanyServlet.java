@@ -39,7 +39,6 @@ public class TanyServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
-<<<<<<< Updated upstream
         String cin = request.getParameter("cin");
 
         try {
@@ -63,10 +62,6 @@ public class TanyServlet extends HttpServlet {
             e.printStackTrace();
             out.print( e.getMessage() );
         }
-=======
-        // Eto no tokony ilazana hoe alaivo ito tany ito
-        Integer id = Integer.valueOf( request.getParameter("id_tany") );
->>>>>>> Stashed changes
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -95,44 +90,7 @@ public class TanyServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-<<<<<<< Updated upstream
-        // 1 - Alefa any amin'ny C# aloha ny cin an'ilay olona
-        // 2 - Tonga any amin'ny C# ilay Cin, de alaina ny Information an'ilay olona
-        // 3 - Alaina ny information ana santé ( C# )
-        // 4 - Alaina indray avy eo ny banque ( EJB banque - remote )
-        // 5 - Alaina indray avy eo ny resaka tany ( EJB tany - locale )
-        // 6 - Alefa any amin'ny affichage de apoitra ilay izy
-        // Atreo aloha no vitaina
-=======
-        String cin = request.getParameter("cin");
-        
-try{
-//        1 - Maka personne avy amin'ny C#
-        PersonDTO personne = this.tanyEJB.getPersonne(cin);
-        // System.out.println(" Info personne :::  " + personne.getFirstName() );
-//        2 - Maka ny information ana banque indray ( EJB Remote )
-        AccountDTO account = this.tanyEJB.getBank(cin);
-//        3 - Alaina ny Tanin'ilay olona
-        Vector<TanyDTO> tanys = this.tanyEJB.getTany(cin);
-//        Okey azoko daholo ny données ilaiko rehetra
-// Alefa any amin'ny affichage izy zao
-// Ndao ary ehhh
-        request.setAttribute("personne", personne);
-        request.setAttribute("compte", account);
-        request.setAttribute("tany", tanys);
-        
-        request.getRequestDispatcher("information.jsp").forward(request, response);
-
-}catch(Exception e){
-    e.printStackTrace( response.getWriter() );
-}   
-    // Ny atao zao
-    // 1 - Manao Affichage tany iray
-    // 2 - Aseho eo ny détail momba ilay tany
-    // 3 - Manao formulaire de nouvelle tany
-    // 4 - 
->>>>>>> Stashed changes
-        
+        processRequest(request, response);
     }
 
     /**
