@@ -39,10 +39,28 @@ public class TanyServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
+        String cin = request.getParameter("cin");
+
         try {
-            tanyEJB.getTany("123456");
-        } finally {
-            out.close();
+        //        1 - Maka personne avy amin'ny C#
+            PersonDTO personne = this.tanyEJB.getPersonne(cin);
+            // System.out.println(" Info personne :::  " + personne.getFirstName() );
+        //        2 - Maka ny information ana banque indray ( EJB Remote )
+            AccountDTO account = this.tanyEJB.getBank(cin);
+        //        3 - Alaina ny Tanin'ilay olona
+            Vector<TanyDTO> tanys = this.tanyEJB.getTany(cin);
+        //        Okey azoko daholo ny données ilaiko rehetra
+        // Alefa any amin'ny affichage izy zao
+        // Ndao ary ehhh
+            request.setAttribute("personne", personne);
+            request.setAttribute("compte", account);
+            request.setAttribute("tany", tanys);
+
+            request.getRequestDispatcher("information.jsp").forward(request, response);
+
+        } catch(Exception e) {
+            e.printStackTrace();
+            out.print( e.getMessage() );
         }
     }
 
@@ -72,28 +90,6 @@ public class TanyServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String cin = request.getParameter("cin");
-        
-try{
-//        1 - Maka personne avy amin'ny C#
-        PersonDTO personne = this.tanyEJB.getPersonne(cin);
-        // System.out.println(" Info personne :::  " + personne.getFirstName() );
-//        2 - Maka ny information ana banque indray ( EJB Remote )
-        AccountDTO account = this.tanyEJB.getBank(cin);
-//        3 - Alaina ny Tanin'ilay olona
-        Vector<TanyDTO> tanys = this.tanyEJB.getTany(cin);
-//        Okey azoko daholo ny données ilaiko rehetra
-// Alefa any amin'ny affichage izy zao
-// Ndao ary ehhh
-        request.setAttribute("personne", personne);
-        request.setAttribute("compte", account);
-        request.setAttribute("tany", tanys);
-        
-        request.getRequestDispatcher("information.jsp").forward(request, response);
-
-}catch(Exception e){
-    e.printStackTrace( response.getWriter() );
-}
         // 1 - Alefa any amin'ny C# aloha ny cin an'ilay olona
         // 2 - Tonga any amin'ny C# ilay Cin, de alaina ny Information an'ilay olona
         // 3 - Alaina ny information ana santé ( C# )

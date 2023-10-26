@@ -592,19 +592,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Cartel\\.nuget\\packages\\": {}
+    "C:\\Users\\tendr\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Cartel\\Documents\\Projet\\C#\\Sante_Module\\Sante_Module.csproj",
+      "projectUniqueName": "D:\\Project\\EJB\\Carte-CIN\\Sante_Module\\Sante_Module.csproj",
       "projectName": "Sante_Module",
-      "projectPath": "C:\\Users\\Cartel\\Documents\\Projet\\C#\\Sante_Module\\Sante_Module.csproj",
-      "packagesPath": "C:\\Users\\Cartel\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Cartel\\Documents\\Projet\\C#\\Sante_Module\\obj\\",
+      "projectPath": "D:\\Project\\EJB\\Carte-CIN\\Sante_Module\\Sante_Module.csproj",
+      "packagesPath": "C:\\Users\\tendr\\.nuget\\packages\\",
+      "outputPath": "D:\\Project\\EJB\\Carte-CIN\\Sante_Module\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\Cartel\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        "C:\\Users\\tendr\\AppData\\Roaming\\NuGet\\NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net7.0"
@@ -664,7 +664,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.202\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Users\\tendr\\AppData\\Roaming\\.dotnet\\sdk\\7.0.100\\RuntimeIdentifierGraph.json"
       }
     }
   },

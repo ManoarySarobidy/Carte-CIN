@@ -861,6 +861,8 @@ exists or setup the property manually. For example like this:
         <copyfiles files="${reference.BankDTO.jar}" todir="${build.classes.dir}"/>
         <copyfiles files="${reference.PersonDTO.jar}" todir="${build.classes.dir}"/>
         <copyfiles files="${file.reference.gson.jar}" todir="${build.classes.dir}"/>
+        <copyfiles files="${file.reference.generic.jar-1}" todir="${build.classes.dir}"/>
+        <copyfiles files="${file.reference.gson-2.10.1.jar}" todir="${build.classes.dir}"/>
     </target>
     <target if="is.server.weblogic" name="-library-inclusion-in-archive-weblogic">
         <basename file="${reference.Tany_Client_Remote.jar}" property="manifest.reference.Tany_Client_Remote.jar"/>
@@ -871,8 +873,10 @@ exists or setup the property manually. For example like this:
         <basename file="${reference.BankDTO.jar}" property="manifest.reference.BankDTO.jar"/>
         <basename file="${reference.PersonDTO.jar}" property="manifest.reference.PersonDTO.jar"/>
         <basename file="${file.reference.gson.jar}" property="manifest.file.reference.gson.jar"/>
+        <basename file="${file.reference.generic.jar-1}" property="manifest.file.reference.generic.jar-1"/>
+        <basename file="${file.reference.gson-2.10.1.jar}" property="manifest.file.reference.gson-2.10.1.jar"/>
         <manifest file="${build.ear.classes.dir}/META-INF/MANIFEST.MF" mode="update">
-            <attribute name="Extension-List" value="jar-1 jar-2 jar-3 jar-4 jar-5 jar-6 jar-7 jar-8 "/>
+            <attribute name="Extension-List" value="jar-1 jar-2 jar-3 jar-4 jar-5 jar-6 jar-7 jar-8 jar-9 jar-10 "/>
             <attribute name="jar-1-Extension-Name" value="${manifest.reference.Tany_Client_Remote.jar}"/>
             <attribute name="jar-2-Extension-Name" value="${manifest.file.reference.generic.jar}"/>
             <attribute name="jar-3-Extension-Name" value="${manifest.file.reference.postgresql-42.5.0.jar}"/>
@@ -881,6 +885,8 @@ exists or setup the property manually. For example like this:
             <attribute name="jar-6-Extension-Name" value="${manifest.reference.BankDTO.jar}"/>
             <attribute name="jar-7-Extension-Name" value="${manifest.reference.PersonDTO.jar}"/>
             <attribute name="jar-8-Extension-Name" value="${manifest.file.reference.gson.jar}"/>
+            <attribute name="jar-9-Extension-Name" value="${manifest.file.reference.generic.jar-1}"/>
+            <attribute name="jar-10-Extension-Name" value="${manifest.file.reference.gson-2.10.1.jar}"/>
         </manifest>
     </target>
     <target depends="compile" name="library-inclusion-in-manifest">
@@ -892,6 +898,8 @@ exists or setup the property manually. For example like this:
         <copyfiles files="${reference.BankDTO.jar}" todir="${dist.ear.dir}/lib"/>
         <copyfiles files="${reference.PersonDTO.jar}" todir="${dist.ear.dir}/lib"/>
         <copyfiles files="${file.reference.gson.jar}" todir="${dist.ear.dir}/lib"/>
+        <copyfiles files="${file.reference.generic.jar-1}" todir="${dist.ear.dir}/lib"/>
+        <copyfiles files="${file.reference.gson-2.10.1.jar}" todir="${dist.ear.dir}/lib"/>
         <manifest file="${build.ear.classes.dir}/META-INF/MANIFEST.MF" mode="update"/>
     </target>
     <target name="-copy-meta-inf">

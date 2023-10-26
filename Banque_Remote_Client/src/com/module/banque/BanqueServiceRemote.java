@@ -16,6 +16,6 @@ import javax.ejb.Remote;
 
 @Remote
 public interface BanqueServiceRemote extends Serializable {
-    public AccountDTO getBankAccount( String cin );
+    public AccountDTO getBankAccount( String cin ) throws Exception;
     public void transferer(TransferDTO transfer) throws Exception;
 }

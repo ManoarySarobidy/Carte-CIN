@@ -56,23 +56,15 @@ public class Account {
     
     // Mila aseho daholo ny momba azy rehetra
     
-    public Account getByCin(){
+    public Account getByCin() throws Exception {
         String sql = "select * from account where cin = '" + this.getCin() + "'";
-        System.out.println(sql);
         // Okey de rehefa azo iny de mila alaina ihany koa ny transaction mifanaraka aminy
-        try{
-            Connect c = new Connect();
-            System.out.println("Eto isika izao (2)");
-            Connection con = c.getPostgres();
-            Account account = Dao.find(con, sql, this);
-            account.setUpTransaction(con);
-            con.close();
-            return account;
-        }catch( Exception e ){
-            e.printStackTrace();
-            System.err.println( "Error in Account model : " + e.getMessage() );
-        }
-        return null;
+        Connect c = new Connect();
+        Connection con = c.getPostgres();
+        Account account = Dao.find(con, sql, this);
+        account.setUpTransaction(con);
+        con.close();
+        return account;
     }
     
     void setUpTransaction( Connection connection ) throws Exception{

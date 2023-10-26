@@ -12,7 +12,6 @@ import dto.devise.DeviseDTO;
 import dto.tany.TanyDTO;
 import java.util.Properties;
 import java.util.Vector;
-import javax.ejb.EJB;
 import javax.naming.InitialContext;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;

@@ -21,7 +21,7 @@ public class BanqueService implements BanqueServiceRemote, BanqueLocal {
     // "Insert Code > Add Business Method")
     
     @Override
-    public AccountDTO getBankAccount(String cin){
+    public AccountDTO getBankAccount(String cin) throws Exception {
         
         Account account = new Account();
         account.setCin(cin);

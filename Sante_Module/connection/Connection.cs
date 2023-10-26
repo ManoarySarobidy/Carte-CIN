@@ -4,7 +4,7 @@ public class Connection {
 
     public static NpgsqlConnection GetConnection() {
         int Port = 5432;
-        string Host = "localhost";
+        string Host = "192.168.20.101";
         string User = "manoary";
         string DBname = "sante";
         string Password = "sarobidy";

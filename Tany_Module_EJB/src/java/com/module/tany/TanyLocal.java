@@ -18,7 +18,7 @@ import javax.ejb.Local;
  */
 @Local
 public interface TanyLocal extends Serializable {
-    public Vector<TanyDTO> getTany(String cin);
+    public Vector<TanyDTO> getTany(String cin) throws Exception;
     
     public DeviseDTO[] getDevises() throws Exception;
     

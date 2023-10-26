@@ -5,9 +5,13 @@
 package com.module.tany;
 
 import com.dto.PersonDTO;
+import com.dto.sante.Allergie;
+import com.dto.sante.Sante;
 import com.entity.devise.Devise;
 import com.entity.tany.Tany;
 import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import com.module.banque.BanqueServiceRemote;
 import dto.bank.AccountDTO;
 import dto.devise.DeviseDTO;
@@ -38,31 +42,20 @@ public class TanyEJB implements TanyEJBRemote, TanyLocal {
      * @return
      */
     @Override
-    public Vector<TanyDTO> getTany(String cin) {
-        System.out.println( "Tany recuperer" );
-        try{
-            Vector<Tany> tanys = this.getTanys(cin);
-            return this.toDto(tanys);
-        }catch(NullPointerException e){
-            System.out.println(e.getMessage());
-        }catch(Exception e){
-            e.printStackTrace();
-        }
-        return null;
+    public Vector<TanyDTO> getTany(String cin) throws Exception {
+        Vector<Tany> tanys = this.getTanys(cin);
+        return this.toDto(tanys);
     }
     
-    public Vector<Tany> getTanys( String cin ) throws Exception{
+    public Vector<Tany> getTanys( String cin ) throws Exception {
         String sql = "select * from tany where cin = '" + cin + "'";
-        try{
-            Connect c = new Connect();
-            Connection re = c.getPostgres();
-            Vector<Tany> tany = Dao.findAll(re, new Tany(), sql);
-            re.close();
+        Connect c = new Connect();
+        Vector<Tany> tany = null;
+        try (Connection re = c.getPostgres()) {
+            tany = Dao.findAll(re, new Tany(), sql);
             if( tany.isEmpty() ) throw new NullPointerException( "Tsy manana tany io olona io" );
-            return tany;
-        }catch(Exception e){
-            throw e;
         }
+        return tany;
     }
     
     private Vector<TanyDTO> toDto( Vector<Tany> tanys ){
@@ -91,11 +84,11 @@ public class TanyEJB implements TanyEJBRemote, TanyLocal {
     public PersonDTO getPersonne( String cin ) throws Exception{
         String api_endpoint = "http://localhost:5227/Personne/GetPersonne?cin=" + cin;
         URL urls = new URL(api_endpoint);
-        HttpURLConnection connection = (HttpURLConnection)urls.openConnection();
+        HttpURLConnection connection = (HttpURLConnection) urls.openConnection();
         connection.setRequestMethod("GET");
         
         int reponse_code = connection.getResponseCode();
-        if( reponse_code == HttpURLConnection.HTTP_OK ){
+        if( reponse_code == HttpURLConnection.HTTP_OK || reponse_code == 204 ) {
             BufferedReader reader = new BufferedReader( new InputStreamReader(connection.getInputStream()) );
             String inputLine;
             StringBuilder reponse = new StringBuilder();
@@ -103,12 +96,17 @@ public class TanyEJB implements TanyEJBRemote, TanyLocal {
             reader.close();
             String rp = reponse.toString();
             Gson gson = new Gson();
-            PersonDTO person = gson.fromJson(rp, PersonDTO.class);
+            JsonObject json = gson.fromJson(rp, JsonObject.class);
+            Sante sante = new Sante();
+            PersonDTO person = gson.fromJson(json, PersonDTO.class);
+            sante.setAllergie((Allergie[]) gson.fromJson(json.get("sante").getAsJsonObject().get("allergies"), Allergie[].class));
+            person.setSante(sante);
+            System.out.println(json.get("sante").getAsJsonObject().get("allergies"));
             System.out.println("response ::::=> " + reponse.toString());
             return person;
-        }else{
+        } else {
             System.out.println("Erreur be lele");
-            throw new Exception("Big exception very big");
+            throw new Exception("Big exception very big " + Integer.toString(reponse_code));
         }
     }
     
@@ -118,7 +116,7 @@ public class TanyEJB implements TanyEJBRemote, TanyLocal {
     public AccountDTO getBank( String cin ) throws Exception{
         Properties props = new Properties();
         props.setProperty( "org.omg.CORBA.ORBInitialHost", "localhost" );
-        props.setProperty( "org.omg.CORBA.ORBInitialPort", "1234" ); // Ovaina raha sendra tsy mety ito
+        props.setProperty( "org.omg.CORBA.ORBInitialPort", "3700" ); // Ovaina raha sendra tsy mety ito
         InitialContext context = new InitialContext(props);
         BanqueServiceRemote banque = (BanqueServiceRemote)context.lookup("java:global/Banque_Server/Banque_Module/BanqueService!com.module.banque.BanqueServiceRemote");
         AccountDTO dto = banque.getBankAccount(cin);

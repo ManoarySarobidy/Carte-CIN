@@ -41,7 +41,7 @@ public class Connect{
     }
 
     public void setPostgreServer(){
-        this.postgreServer = "jdbc:postgresql://localhost:5432/banque";
+        this.postgreServer = "jdbc:postgresql://192.168.20.101:5432/banque";
     }
     public void setUserPostgres(){
         this.userPostgres = "manoary";

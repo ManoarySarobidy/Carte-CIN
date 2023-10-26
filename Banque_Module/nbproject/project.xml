@@ -6,11 +6,11 @@
             <name>Banque_Module</name>
             <minimum-ant-version>1.6.5</minimum-ant-version>
             <explicit-platform explicit-source-supported="true"/>
-            <included-library dirs="200">file.reference.generic.jar</included-library>
             <included-library dirs="200">reference.Banque_Remote_Client.jar</included-library>
-            <included-library dirs="200">reference.BankDTO.jar</included-library>
             <included-library dirs="200">reference.Tany_Client_Remote.jar</included-library>
             <included-library dirs="200">reference.FoncierDTO.jar</included-library>
+            <included-library dirs="200">file.reference.generic.jar-1</included-library>
+            <included-library dirs="200">reference.BankDTO.jar</included-library>
             <source-roots>
                 <root id="src.dir"/>
             </source-roots>

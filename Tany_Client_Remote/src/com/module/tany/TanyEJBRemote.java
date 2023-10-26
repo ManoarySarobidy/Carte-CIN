@@ -19,7 +19,7 @@ public interface TanyEJBRemote extends Serializable {
     /// Inona ny tokony ho ato
     // Tokony hoe afaka maka ny tany ho an'olona
     
-    public Vector<TanyDTO> getTany( String cin );
+    public Vector<TanyDTO> getTany( String cin ) throws Exception;
     
     public DeviseDTO[] getDevises() throws Exception;
     
