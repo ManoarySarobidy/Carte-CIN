@@ -21,20 +21,20 @@
                         <form action="Borne" class="form" method="POST">
                                 <input type="hidden" name="idTany" value="1">
                                 <div id="long-lat">
-                                    <div class="row my-3" id="original">
+                                    <div class="row my-3" id="original" style="display: none;">
                                         <div class="col-lg-3">
                                             <label for="" class="label"> Longitude : </label>
-                                            <input type="text" class="form-control" name="longitudes[]" id="">
+                                            <input type="text" class="form-control" name="longitudes[]" id="" value="0">
                                         </div>
                                         <div class="col-lg-3">
                                             <label for="" class="label"> Latitude : </label>
-                                            <input type="text" class="form-control" name="latitudes[]" id="">
+                                            <input type="text" class="form-control" name="latitudes[]" id="" value="0">
                                         </div>
                                     </div>
                                     
                                 </div>
                             <div class="row">
-                                <button type="button" onclick="addRow()" class="btn btn-primary my-3"> Ajouter autre </button>
+                                <button type="button" onclick="onClick()" class="btn btn-primary my-3"> Ajouter autre </button>
                                 <input type="submit" class="btn btn-primary" value="Ajouter les bornes">
                             </div>
                         </form>
@@ -45,21 +45,50 @@
         <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
         <script>
-            var map = L.map('map').setView([ -18.933333, 47.516667], 13);
+            var map = L.map('map').setView([-18.933333, 47.516667], 13);
+            var points = [];
+            var last = L.polygon(points);
 
+            map.on('click', (e) => {
+                map.removeLayer(last);
+                L.marker(e.latlng).addTo(map);
+                points.push([e.latlng.lat, e.latlng.lng]);
+                console.log(points);
+                addRow(e.latlng);
+                last = L.polygon(points);
+                last.addTo(map);
+            });
+            
             L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
                 attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
             }).addTo(map);
+            
+            let form = document.querySelector("#long-lat");
+            let toClone = document.querySelector('#original');
 
+            function removeAllLayer() {
+                map.eachLayer(function (layer) {
+                    map.removeLayer(layer);
+                });
+            }
 
-            function addRow(){
+            function onClick() {
+                addRow({lat: 0, lng: 0});
+            }
+
+            function addRow(point) {
+                form.appendChild(clone(point));
+            }
+
+            function clone(point) {
                 let toClone = document.querySelector('#original');
                 let clone = toClone.cloneNode(true);
+                clone.removeAttribute('style');
                 let inputs = clone.querySelectorAll("input[type='text']");
-                inputs.forEach( input => input.value = '' );
+                inputs[0].setAttribute('value', point.lat);
+                inputs[1].setAttribute('value', point.lng);
                 clone.removeAttribute('id');
-                let form = document.querySelector("#long-lat");
-                form.appendChild(clone);
+                return clone;
             }
 
         </script>
